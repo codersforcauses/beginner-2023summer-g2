@@ -91,4 +91,3 @@ Open the file named `index.html` in the project root directory and write basic H
 Open the `index.html` file in your browser to view your web page.
 
 Congratulations! You've set up a basic JavaScript project. Experiment with your HTML, CSS, and JavaScript code to build exciting web applications.
-Cindy

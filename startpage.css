@@ -1,0 +1,48 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0fbfc;
+}
+
+header{
+    /* Text color */
+    color: white  ; 
+    /* Background colour */
+    background-color: #1f2041;
+    /* text - center */
+    text-align: center;
+}
+
+.main{
+    display: grid;
+    text-align: center; 
+    grid-template-columns: repeat(1, 1fr);
+    gap: 10px;
+}
+
+.main > div {
+    color: #f6f7eb;
+    border: 4px solid #1f2041;
+    background-color: #588fad;
+    width: 35%;
+    padding : 100px;
+}
+
+#playButton{
+    display: grid;
+    place-items: center;
+    color: #f6f7eb;
+    background-color: #1f2041;
+    text-align: center;
+    margin : auto;
+    width: 50%;
+}
+
+
+footer{
+    color: #f6f7eb;
+    background-color: #1f2041;
+    padding: 15px;
+    text-align: center;
+}
+
