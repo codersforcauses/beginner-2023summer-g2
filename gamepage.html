@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Space invaders</title>
+  <link rel="stylesheet" type="text/css" href="gamepage.css">
+</head>
+
+<body>
+  <canvas id="canvas" style="height:90vh; image-rendering: pixelated; image-rendering: crisp-edges;" width="110"
+    height="80"></canvas>
+
+    <button id = "homeButton">
+        <h6> Home botton </h6>
+    </button>
+
+    <script>
+        document.getElementById('homeButton').addEventListener('click', function(){
+            var destinationPage = 'startpage.html';
+
+            window.location.href = 'startpage.html';
+        });
+    </script>
+
+</body>
+
+<script src="./gamepage.js"></script>
+
+</html>
