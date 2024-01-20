@@ -20,7 +20,9 @@
 
 
         <div>Highscore  
-            <p> The Highscore board</p>
+            <p> The Highscore board <br>
+                Top 10 Highscore
+            </p>
         </div>
 
         <div>Instruction 
@@ -32,6 +34,7 @@
          </div>
     </div>
 
+    <img id="arcade_machine" src="arcade.png" alt= "arcade_machine" style="float:right;">
     <button id = "playButton">
         <h6> Play button </h6>
     </button>
@@ -39,7 +42,6 @@
     <script>
         document.getElementById('playButton').addEventListener('click', function(){
             var destinationPage = 'gamepage.html';
-
             window.location.href = 'gamepage.html';
         });
     </script>
