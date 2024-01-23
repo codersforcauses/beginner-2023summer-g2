@@ -1,14 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="stylesheet" href="style.css" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Your Title</title>
-    </head>
-    <body>
-        <p>Hello World! My name is Arjun.</p>
-        <script src="/main.js"></script>
-    </body>
-</html> ...
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Game Menu</title>
+</head>
+<body>
+
+  <div id="menu1" class="container">
+    <div class="menu">
+      <button id="but1" class="btn-minecraft">Play</button>
+      <button id="but2" class="btn-minecraft">Leaderboard</button>
+      <button id="but3" class="btn-minecraft">Achievements</button>
+    </div>
+    <div class="menu-options">
+      <button class="btn-minecraft">Controls</button>
+      <button class="btn-minecraft">Quit</button>
+    </div>
+  </div>
+
+  <div id="menu2" class="container hidden">
+    <div class="menux hidden">
+      <button id="backButton" class="btn-minecraft">Main Menu</button>
+      <button class="btn-minecraft">Choose Character</button>
+      <button id="start" class="btn-minecraft">Start</button>
+
+    </div>
+  </div>
+    <script src="buttons.js"></script>
+
+  <div id="game" class="gamecont hidden">
+    <p 
+    style="position: fixed; z-index: 10; color: white; left: 10px; top: 10px; margin: 0; 
+    font-family: sans-serif; font-size: 14px;"
+    ><span>Score:</span> <span id="scoreEl">0</span></p>
+      <div>
+        <canvas></canvas>
+      </div>
+  </div>
+  
+</body>
+</html>
