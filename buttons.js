@@ -35,9 +35,19 @@ document.addEventListener('DOMContentLoaded', function () {
     startButton.addEventListener('click', function () {
         // Include and execute game.js
         var script = document.createElement('script');
-        script.src = 'game.js';
+        script.src = 'game2.js';
+        showStartScreen(true);
         document.head.appendChild(script);
         menu2.classList.add('hidden');
         game.classList.remove('hidden');
     });
+
+    function showStartScreen(show) {
+        const startScreen = document.getElementById('startScreen');
+        startScreen.style.display = show ? 'block' : 'none';
+    }
+    
+    showStartScreen(false);
 });
+
+
