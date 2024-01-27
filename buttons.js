@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     startButton.addEventListener('click', function () {
         // Include and execute game.js
         var script = document.createElement('script');
-        script.src = 'game2.js';
+        script.src = 'game.js';
         showStartScreen(true);
         document.head.appendChild(script);
         menu2.classList.add('hidden');
