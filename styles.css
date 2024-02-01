@@ -10,7 +10,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-image: url(img/empty-underwater-blue-shine-abstract-background-light-bright-clean-ocean-sea_1284-42065.avif);
+  background-image: url(img/bg.jpg);
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -91,17 +91,38 @@ body {
     background-color: white;
 }
 
+#game #scoreEl {
+  display: none;
+}
+/* Add the styles for the hidden score display */
+#game #scoreDisplay {
+  display: none;
+}
+
+#game #scoreDisplay {
+  position: fixed;
+  z-index: 10;
+  color: white;
+  left: 10px;
+  top: 10px;
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 14px;
+  display: none;
+}
+
 #gameOverScreen {
   display: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   padding: 20px;
   text-align: center;
   border-radius: 10px;
+  font-size: 20px;
 }
 
 #startScreen {
@@ -116,4 +137,205 @@ body {
   font-size: 24px;
   text-align: center;
   display: block;
+}
+
+/*new stuff below*/
+#pauseScreen {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  display: block;
+}
+
+.boss-warning {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.3); /* Red with 70% opacity */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+  animation: flash 1s infinite alternate;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.boss-warning.hidden {
+  display: none; /* Hide the warning when it has the "hidden" class */
+}
+
+#icon1 {
+  position: fixed;
+  bottom: 1px; /* Adjust the distance from the bottom as needed */
+  left: -15px;
+  transform: translateX(-50%);
+  display: none; /* Initially hide the icon container */
+  
+}
+
+#icon2 {
+  position: fixed;
+  bottom: 1px; /* Adjust the distance from the bottom as needed */
+  left: 55px;
+  transform: translateX(-50%);
+  display: none; /* Initially hide the icon container */
+  
+}
+
+#icon3 {
+  position: fixed;
+  bottom: 1px; /* Adjust the distance from the bottom as needed */
+  left: 125px;
+  transform: translateX(-50%);
+  display: none; /* Initially hide the icon container */
+  
+}
+
+#icon4 {
+  position: fixed;
+  bottom: 1px; /* Adjust the distance from the bottom as needed */
+  left: 195px;
+  transform: translateX(-50%);
+  display: none; /* Initially hide the icon container */
+  
+}
+
+.icon-score-container {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: -3px;
+  left: 300px;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.icon-score-container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px; /* Adjust the margin between icons as needed */
+}
+
+.icon-score-container img {
+  margin-bottom: -5px;
+}
+
+#exitButton {
+  position: fixed;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 17%;
+  padding: .5rem 0;
+  margin-bottom: .75rem;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+  letter-spacing: .025em;
+  border: 2px solid rgba(0, 0, 0, 1);
+  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
+              inset -3px -3px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: none; /* Initially hide the exit button */
+}
+
+#exitButton:hover {
+  background: rgba(115, 107, 221, 1);
+}
+
+#exitButton:focus {
+  color: rgb(246, 246, 44);
+  outline: none;
+}
+
+
+#popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
+
+#popup p {
+  margin-bottom: 20px;
+  color: black; /* Adjust text color as needed */
+}
+
+#popup button {
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 100%;
+  padding: .5rem 0;
+  margin-bottom: .75rem;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+  letter-spacing: .025em;
+  border: 2px solid rgba(0, 0, 0, 1);
+  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
+              inset -3px -3px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+#popup button:hover {
+  background: rgba(115, 107, 221, 1);
+}
+
+#popup button:focus {
+  color: rgb(246, 246, 44);
+  outline: none;
+}
+
+#popup.visible {
+  display: block;
+}
+
+
+#minecraftHeartsContainer {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 1px;
+  left: 1135px;
+  transform: translateX(-50%);
+  display:none;
+}
+
+.minecraft-heart {
+  display: flex;
+  align-items: right;
+  margin-right: -1px;
+}
+
+.minecraft-heart img {
+  margin-bottom: 5px;
 }
