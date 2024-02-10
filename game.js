@@ -1963,7 +1963,7 @@ function resetGame() {
     grids.length = 0; // Clear grids array
     score = 0;
     scoreEl.innerHTML = score;
-    player.health = 100;
+    player.health = 10;
     gameState.hearts = player.health;
     updateHearts(player.health);
     frames = 0;
