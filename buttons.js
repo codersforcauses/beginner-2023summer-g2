@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var menu2 = document.getElementById('menu2');
     var startButton = document.getElementById('start');
     var exitButton = document.getElementById('exitButton');
-
     var popup = document.getElementById('popup');
     var yesButton = document.getElementById('yesButton');
     var noButton = document.getElementById('noButton');
@@ -166,10 +165,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+
     function showGameOverScreen(show) {
         const gameOverScreen = document.getElementById('gameOverScreen');
         gameOverScreen.style.display = show ? 'block' : 'none';
     }
+
 
     // Hearts
     const minecraftHeartsContainer = document.getElementById('minecraftHeartsContainer');
@@ -197,5 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
         minecraftHeartsContainer.insertBefore(heartDiv, minecraftHeartsContainer.firstChild);
         }
     }
+    
 
 });

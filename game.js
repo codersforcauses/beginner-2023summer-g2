@@ -74,6 +74,8 @@ class Player {
     }
 }
 
+
+
 class Projectile {
     constructor({position, velocity}){
         this.position = position
@@ -1861,16 +1863,70 @@ let bossWarningFrames = 0;
 const bossWarningDuration = 600;
 let bossNumber = 0
 
+//ledaerboard dict
+var leaderboard = JSON.parse(localStorage.getItem("leaderboard"))||[
+    {name: "start", score : 1},
+];
+
+
+//display the leaderboard 
+function generateLeaderboard() {
+    var leaderboardBody = document.getElementById("leaderboardBody");
+    leaderboardBody.innerHTML = "";
+    // Display only top 10 entries
+    var topEntries = leaderboard.slice(0, 10);
+    topEntries.forEach(function(entry, index) {
+        var leaderboardItem = document.createElement("div");
+        leaderboardItem.classList.add("leaderboard-item");
+        leaderboardItem.innerHTML = `
+            <span class="position">${index + 1}.</span>
+            <span class="name">${entry.name}</span>
+            <span class="score">${entry.score}</span>
+        `;
+        leaderboardBody.appendChild(leaderboardItem);
+    });
+
+}
+function saveLeaderboardData() {
+    localStorage.setItem("leaderboardData", JSON.stringify(leaderboard));
+}
+
+//adding score to leaderboard
+
+function updateLeaderboard(score) {
+    var testscore = score;
+    var top10Scores = leaderboardData.slice(0, 10).map(entry => entry.score);
+    if (testscore > Math.min(...top10Scores)) {
+        var name = (Math.floor(Math.random() * 1000) + 1).toString();
+
+        leaderboard.push({ name: name, score: score });
+        leaderboard.sort(function(a, b) {
+            return b.score - a.score;
+        });
+        saveLeaderboardData(); // Save updated data to localStorage
+    }
+}
+
+
+
 function showGameOverScreen(show) {
     // Get the score element
     const scoreOverElement = document.getElementById('scoreOver');
 
+
     // Set the content of the score element to the current score
     scoreOverElement.textContent = score;
+    updateLeaderboard(score);
 
     const gameOverScreen = document.getElementById('gameOverScreen');
     gameOverScreen.style.display = show ? 'block' : 'none';
+
+    
 }
+generateLeaderboard();
+
+
+
 
 function showPauseScreen(show) {
     const startScreen = document.getElementById('pauseScreen');
@@ -2034,6 +2090,7 @@ function showStartScreen(show) {
     const startScreen = document.getElementById('startScreen');
     startScreen.style.display = show ? 'block' : 'none';
 }
+
 // Add this function to show the boss warning
 function showBossWarning() {
     const bossWarning = document.getElementById('bossWarning');
@@ -2079,3 +2136,4 @@ function updateHearts(playerHealth) {
 updateHearts(gameState.hearts);
 
 animate();
+

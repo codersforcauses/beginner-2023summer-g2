@@ -8,3 +8,4 @@ window.gameState = {
     gamestart: 0,
     hearts:10,
 };
+

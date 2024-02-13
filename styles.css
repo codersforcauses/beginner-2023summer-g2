@@ -16,16 +16,17 @@ body {
   overflow: hidden;
 }
 
-#leaderboard{
+.leaderboard{
   background: #727272;
   color: rgb(247, 247, 247);
-  width: 25%;
+  width: 60%;
   padding: .5rem 0;
   margin-bottom: .75rem;
   text-align: center;
   text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
   font-size: 20px;
   letter-spacing: .025em;
+  word-spacing: 2em;
   border: 2px solid rgba(0, 0, 0, 1);
   box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
               inset -3px -3px 0 rgba(0, 0, 0, 0.5);
@@ -33,34 +34,78 @@ body {
   flex-direction: column;
   align-items: center;
 }
-/* #Instruction{
+
+.leaderboard-body{
   background: #727272;
   color: rgb(247, 247, 247);
-  width: 100%;
+  width: 90%;
   padding: .5rem 0;
   margin-bottom: .75rem;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
   text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  word-spacing: 2em;
   font-size: 20px;
   letter-spacing: .025em;
   border: 2px solid rgba(0, 0, 0, 1);
   box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
               inset -3px -3px 0 rgba(0, 0, 0, 0.5);
 }
-#Character{
+
+.leaderboard-item:nth-child(even) {
   background: #727272;
   color: rgb(247, 247, 247);
   width: 100%;
   padding: .5rem 0;
   margin-bottom: .75rem;
-  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
   text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
   font-size: 20px;
   letter-spacing: .025em;
   border: 2px solid rgba(0, 0, 0, 1);
-  box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
-              inset -3px -3px 0 rgba(0, 0, 0, 0.5);
-} */
+}
+
+.leaderboard-item span {
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 100%;
+  margin-bottom: .75rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+}
+
+.leaderboard-item .rank {
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 100%;
+  margin-bottom: .75rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+;
+}
+
+.leaderboard-item .name {
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 100%;
+  margin-bottom: .75rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+
+}
+
+.leaderboard-item .score {
+  background: #727272;
+  color: rgb(247, 247, 247);
+  width: 100%;
+  margin-bottom: .75rem;
+  text-align: center;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  font-size: 20px;
+
+}
 
 .container {
   height: 100vh;
@@ -233,36 +278,40 @@ body {
 }
 
 #icon1 {
-  position: fixed;
+  position: flex;
   bottom: 1px; /* Adjust the distance from the bottom as needed */
   left: -15px;
+  color: aliceblue;
   transform: translateX(-50%);
   display: none; /* Initially hide the icon container */
   
 }
 
 #icon2 {
-  position: fixed;
+  position: flex;
   bottom: 1px; /* Adjust the distance from the bottom as needed */
   left: 55px;
+  color: aliceblue;
   transform: translateX(-50%);
   display: none; /* Initially hide the icon container */
   
 }
 
 #icon3 {
-  position: fixed;
+  position: flex;
   bottom: 1px; /* Adjust the distance from the bottom as needed */
   left: 125px;
+  color: aliceblue;
   transform: translateX(-50%);
   display: none; /* Initially hide the icon container */
   
 }
 
 #icon4 {
-  position: fixed;
+  position: flex;
   bottom: 1px; /* Adjust the distance from the bottom as needed */
   left: 195px;
+  color: aliceblue;
   transform: translateX(-50%);
   display: none; /* Initially hide the icon container */
   
@@ -283,6 +332,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin-right: 10px; /* Adjust the margin between icons as needed */
+
 }
 
 .icon-score-container img {
@@ -385,3 +435,4 @@ body {
 .minecraft-heart img {
   margin-bottom: 5px;
 }
+
