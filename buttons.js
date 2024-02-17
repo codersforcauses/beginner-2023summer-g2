@@ -12,12 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var menu2 = document.getElementById('menu2');
     var startButton = document.getElementById('start');
     var exitButton = document.getElementById('exitButton');
+    
     var popup = document.getElementById('popup');
     var yesButton = document.getElementById('yesButton');
     var noButton = document.getElementById('noButton');
         
     exitButton.style.display = 'none';
 
+    const clickSound = document.getElementById('clickSound');
+    const bgm = document.getElementById('bgm');
+/*
     // Event listener for the Play button
     playButton.addEventListener('click', function () {
         // Hide Menu 1
@@ -33,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show Menu 1
         menu1.classList.remove('hidden');
     });
+    */
 
     // Event listener for the Start button in menu2
     startButton.addEventListener('click', function () {
@@ -198,6 +203,27 @@ document.addEventListener('DOMContentLoaded', function () {
         minecraftHeartsContainer.insertBefore(heartDiv, minecraftHeartsContainer.firstChild);
         }
     }
-    
+
+    // Function to play the click sound
+    function playClickSound() {
+        if (clickSound) {
+            clickSound.currentTime = 0; // Reset the audio to the beginning
+            clickSound.play();
+        }
+    }
+
+    // Function to play the music
+    function playBGM() {
+        // Check if the audio element is loaded
+        if (bgm) {
+            // Set the audio to 15 percent or lower
+            bgm.volume = 0.15;
+            // Play the sound
+            //bgm.play();
+            bgm.play().catch(function(error) {
+                console.error('Error playing background music:', error);
+            });
+        }
+    }
 
 });
