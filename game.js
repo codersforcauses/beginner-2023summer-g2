@@ -1898,8 +1898,9 @@ let bossWarningFrames = 0;
 const bossWarningDuration = 600;
 let bossNumber = 0
 
+//= JSON.parse(localStorage.getItem("leaderboard"))
 //ledaerboard dict
-var leaderboard = JSON.parse(localStorage.getItem("leaderboard"))||[
+var leaderboard = [
     {name: "start", score : 1},
 ];
 
@@ -1951,7 +1952,7 @@ function showGameOverScreen(show) {
 
     // Set the content of the score element to the current score
     scoreOverElement.textContent = score;
-    updateLeaderboard(score);
+    updateLeaderboard(myGameGlobals.Score);
 
     const gameOverScreen = document.getElementById('gameOverScreen');
     gameOverScreen.style.display = show ? 'block' : 'none';
