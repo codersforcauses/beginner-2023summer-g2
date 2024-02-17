@@ -1205,6 +1205,7 @@ function animate(){
                         showGameOverScreen(true);
                         hideBossWarning();
                         Ecount = 0;
+                        myGameGlobals.Score = score
                     }, 2000)
                     setTimeout(() => {
                         invaderProjectiles.splice(index, 1)
@@ -1300,6 +1301,7 @@ function animate(){
                     showGameOverScreen(true);
                     hideBossWarning();
                     Ecount = 0;
+                    myGameGlobals.Score = score
                 }, 2000)
                 setTimeout(() => {
                     game.active = false
@@ -2011,6 +2013,7 @@ function resetCooldown() {
 
 let startCount = 0
 function resetGame() {
+    myGameGlobals.Score = 0
     showGameOverScreen(false);
     showStartScreen(false);
     startCount = 1
