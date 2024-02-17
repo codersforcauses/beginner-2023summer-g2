@@ -1884,21 +1884,21 @@ function generateLeaderboard() {
             <span class="score">${entry.score}</span>
         `;
         leaderboardBody.appendChild(leaderboardItem);
+        
     });
 
 }
 function saveLeaderboardData() {
-    localStorage.setItem("leaderboardData", JSON.stringify(leaderboard));
+    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
 }
 
 //adding score to leaderboard
 
 function updateLeaderboard(score) {
     var testscore = score;
-    var top10Scores = leaderboardData.slice(0, 10).map(entry => entry.score);
+    var top10Scores = leaderboard.slice(0, 10).map(entry => entry.score);
     if (testscore > Math.min(...top10Scores)) {
         var name = (Math.floor(Math.random() * 1000) + 1).toString();
-
         leaderboard.push({ name: name, score: score });
         leaderboard.sort(function(a, b) {
             return b.score - a.score;
