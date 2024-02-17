@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('scoreEl').style.display = 'inline'; 
 
         document.head.appendChild(script);
-        menu2.classList.add('hidden');
+        menu1.classList.add('hidden');
 
         // Show the icon container
         document.getElementById('iconScoreContainer').style.display = 'flex';
