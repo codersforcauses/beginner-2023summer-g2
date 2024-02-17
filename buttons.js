@@ -6,10 +6,10 @@ const button = document.querySelectorAll('.btn-minecraft')
 })
 
 document.addEventListener('DOMContentLoaded', function () {
-    var playButton = document.getElementById('but1');
-    var backButton = document.getElementById('backButton');
+    //var playButton = document.getElementById('but1');
+    //var backButton = document.getElementById('backButton');
     var menu1 = document.getElementById('menu1');
-    var menu2 = document.getElementById('menu2');
+    //var menu2 = document.getElementById('menu2');
     var startButton = document.getElementById('start');
     var exitButton = document.getElementById('exitButton');
     
@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the Start button in menu2
     startButton.addEventListener('click', function () {
+        //ButtonClick sound
+        playClickSound(); // Play click sound
+        console.log(myGameGlobals.BGMC)
+        if (myGameGlobals.BGMC === 0) {
+            playBGM()
+            myGameGlobals.BGMC++
+        }
+        
         // Include and execute game.js
         var script = document.createElement('script');
         script.src = 'game.js';
@@ -114,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the Exit button
     exitButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         //hide other game elements
         showStartScreen(false);
         // Call the pauseAnimation function from game.js
@@ -127,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     yesButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         // Perform actions when the user clicks "Yes"
         // ...
         exitButton.style.display = 'none';
@@ -159,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the No button
     noButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         document.getElementById('popup').classList.remove('visible');
         if (gameState.gamestart === 0) {
             showStartScreen(true)
