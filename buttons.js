@@ -6,18 +6,22 @@ const button = document.querySelectorAll('.btn-minecraft')
 })
 
 document.addEventListener('DOMContentLoaded', function () {
-    var playButton = document.getElementById('but1');
-    var backButton = document.getElementById('backButton');
+    //var playButton = document.getElementById('but1');
+    //var backButton = document.getElementById('backButton');
     var menu1 = document.getElementById('menu1');
-    var menu2 = document.getElementById('menu2');
+    //var menu2 = document.getElementById('menu2');
     var startButton = document.getElementById('start');
     var exitButton = document.getElementById('exitButton');
+    
     var popup = document.getElementById('popup');
     var yesButton = document.getElementById('yesButton');
     var noButton = document.getElementById('noButton');
         
     exitButton.style.display = 'none';
 
+    const clickSound = document.getElementById('clickSound');
+    const bgm = document.getElementById('bgm');
+/*
     // Event listener for the Play button
     playButton.addEventListener('click', function () {
         // Hide Menu 1
@@ -33,9 +37,18 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show Menu 1
         menu1.classList.remove('hidden');
     });
+    */
 
     // Event listener for the Start button in menu2
     startButton.addEventListener('click', function () {
+        //ButtonClick sound
+        playClickSound(); // Play click sound
+        console.log(myGameGlobals.BGMC)
+        if (myGameGlobals.BGMC === 0) {
+            playBGM()
+            myGameGlobals.BGMC++
+        }
+        
         // Include and execute game.js
         var script = document.createElement('script');
         script.src = 'game.js';
@@ -45,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('scoreEl').style.display = 'inline'; 
 
         document.head.appendChild(script);
-        menu2.classList.add('hidden');
+        menu1.classList.add('hidden');
 
         // Show the icon container
         document.getElementById('iconScoreContainer').style.display = 'flex';
@@ -109,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the Exit button
     exitButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         //hide other game elements
         showStartScreen(false);
         // Call the pauseAnimation function from game.js
@@ -122,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     yesButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         // Perform actions when the user clicks "Yes"
         // ...
         exitButton.style.display = 'none';
@@ -154,6 +171,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the No button
     noButton.addEventListener('click', function () {
+        playClickSound(); 
+        
         document.getElementById('popup').classList.remove('visible');
         if (gameState.gamestart === 0) {
             showStartScreen(true)
@@ -198,6 +217,27 @@ document.addEventListener('DOMContentLoaded', function () {
         minecraftHeartsContainer.insertBefore(heartDiv, minecraftHeartsContainer.firstChild);
         }
     }
-    
+
+    // Function to play the click sound
+    function playClickSound() {
+        if (clickSound) {
+            clickSound.currentTime = 0; // Reset the audio to the beginning
+            clickSound.play();
+        }
+    }
+
+    // Function to play the music
+    function playBGM() {
+        // Check if the audio element is loaded
+        if (bgm) {
+            // Set the audio to 15 percent or lower
+            bgm.volume = 0.15;
+            // Play the sound
+            //bgm.play();
+            bgm.play().catch(function(error) {
+                console.error('Error playing background music:', error);
+            });
+        }
+    }
 
 });

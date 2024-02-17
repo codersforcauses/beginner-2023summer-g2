@@ -2,6 +2,39 @@ const scoreEl = document.querySelector('#scoreEl')
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+const Start = document.getElementById('Start');
+const GameOver = document.getElementById('GameOver');
+const Pause = document.getElementById('Pause');
+
+const BossAlert1 = document.getElementById('BossAlert1');
+const BossAlert2 = document.getElementById('BossAlert2');
+const BossDie = document.getElementById('BossDie');
+const BossSpawn = document.getElementById('BossSpawn');
+
+const EnemyShootSFX = document.getElementById('EnemyShoot');
+const ShootSFX = document.getElementById('Shoot');
+const EnemyDieSFX = document.getElementById('EnemyDie');
+const PlayerHitSFX = document.getElementById('PlayerHit');
+
+const Flak = document.getElementById('Flak');
+const Reload = document.getElementById('Reload');
+
+const Overcharge = document.getElementById('Overcharge');
+const OverchargeCD = document.getElementById('OverchargeCD');
+
+const Shield = document.getElementById('Shield');
+const ShieldCD = document.getElementById('ShieldCD');
+
+const Heal = document.getElementById('Heal');
+const HealCD = document.getElementById('HealCD');
+
+const BossHit1 = document.getElementById('BossHit1');
+const BossHit2 = document.getElementById('BossHit2');
+const BossHit3 = document.getElementById('BossHit3');
+const BossHit4 = document.getElementById('BossHit4');
+
+const Boss5SFX = document.getElementById('Boss5SFX');
+
 canvas.width = 1024
 canvas.height = 675
 
@@ -1172,6 +1205,7 @@ function animate(){
                         showGameOverScreen(true);
                         hideBossWarning();
                         Ecount = 0;
+                        myGameGlobals.Score = score
                     }, 2000)
                     setTimeout(() => {
                         invaderProjectiles.splice(index, 1)
@@ -1267,6 +1301,7 @@ function animate(){
                     showGameOverScreen(true);
                     hideBossWarning();
                     Ecount = 0;
+                    myGameGlobals.Score = score
                 }, 2000)
                 setTimeout(() => {
                     game.active = false
@@ -1978,6 +2013,7 @@ function resetCooldown() {
 
 let startCount = 0
 function resetGame() {
+    myGameGlobals.Score = 0
     showGameOverScreen(false);
     showStartScreen(false);
     startCount = 1
