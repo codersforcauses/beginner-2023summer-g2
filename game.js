@@ -2386,7 +2386,7 @@ function resetGame() {
     enigma.health = 2500;
     ancient.health = 3000;
     primordial.health = 4500;
-    bosstimer = 1000//Math.floor(Math.random () * 3000 + 12000)
+    bosstimer = Math.floor(Math.random () * 3000 + 12000)
     elitetimer = Math.floor(Math.random() * 2000 + 8000)
     bossWarningFrames = 0
     bossNumber = 0
