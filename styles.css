@@ -35,7 +35,6 @@ body {
   margin-bottom: 1.25rem;
 }
 
-
 .menu-options {
   display: flex;
   justify-content: space-between;
@@ -339,93 +338,3 @@ body {
 .minecraft-heart img {
   margin-bottom: 5px;
 }
-    .leaderboard{
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 60%;
-        padding: .5rem 0;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-        letter-spacing: .025em;
-        word-spacing: 2em;
-        border: 2px solid rgba(0, 0, 0, 1);
-        box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
-                    inset -3px -3px 0 rgba(0, 0, 0, 0.5);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      
-      .leaderboard-body{
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 90%;
-        padding: .5rem 0;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        word-spacing: 2em;
-        font-size: 20px;
-        letter-spacing: .025em;
-        border: 2px solid rgba(0, 0, 0, 1);
-        box-shadow: inset 3px 3px 0 rgba(255, 255, 255, 0.5),
-                    inset -3px -3px 0 rgba(0, 0, 0, 0.5);
-      }
-      
-      .leaderboard-item:nth-child(even) {
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 100%;
-        padding: .5rem 0;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-        letter-spacing: .025em;
-        border: 2px solid rgba(0, 0, 0, 1);
-      }
-      
-      .leaderboard-item span {
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 100%;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-      }
-      
-      .leaderboard-item .rank {
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 100%;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-      ;
-      }
-      
-      .leaderboard-item .name {
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 100%;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-      
-      }
-      
-      .leaderboard-item .score {
-        background: #727272;
-        color: rgb(247, 247, 247);
-        width: 100%;
-        margin-bottom: .75rem;
-        text-align: center;
-        text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
-        font-size: 20px;
-      
-      }
