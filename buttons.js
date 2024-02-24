@@ -6,13 +6,10 @@ const button = document.querySelectorAll('.btn-minecraft')
 })
 
 document.addEventListener('DOMContentLoaded', function () {
-    //var playButton = document.getElementById('but1');
-    //var backButton = document.getElementById('backButton');
     var menu1 = document.getElementById('menu1');
-    //var menu2 = document.getElementById('menu2');
     var startButton = document.getElementById('start');
     var exitButton = document.getElementById('exitButton');
-    
+
     var popup = document.getElementById('popup');
     var yesButton = document.getElementById('yesButton');
     var noButton = document.getElementById('noButton');
@@ -21,34 +18,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const clickSound = document.getElementById('clickSound');
     const bgm = document.getElementById('bgm');
-/*
+
+    var leaderboard = document.getElementById('leaderboard');
+
+    leaderboard.addEventListener('click', function () {
+        
+    });
+
     // Event listener for the Play button
-    playButton.addEventListener('click', function () {
-        // Hide Menu 1
-        menu1.classList.add('hidden');
-        // Show Menu 2
-        menu2.classList.remove('hidden');
-    });
-
-    // Event listener for the back button in menu2
-    backButton.addEventListener('click', function () {
-        // Hide Menu 2
-        menu2.classList.add('hidden');
-        // Show Menu 1
-        menu1.classList.remove('hidden');
-    });
-    */
-
-    // Event listener for the Start button in menu2
     startButton.addEventListener('click', function () {
-        //ButtonClick sound
         playClickSound(); // Play click sound
         console.log(myGameGlobals.BGMC)
         if (myGameGlobals.BGMC === 0) {
             playBGM()
             myGameGlobals.BGMC++
         }
-        
+
         // Include and execute game.js
         var script = document.createElement('script');
         script.src = 'game.js';
@@ -85,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         myGameGlobals.canAcceptInput = true;
-
         
         if (gameState.gameover) {
             showGameOverScreen(true)
@@ -122,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the Exit button
     exitButton.addEventListener('click', function () {
-        playClickSound(); 
-        
+        playClickSound(); // Play click sound
+
         //hide other game elements
         showStartScreen(false);
         // Call the pauseAnimation function from game.js
@@ -137,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
     yesButton.addEventListener('click', function () {
-        playClickSound(); 
-        
+        playClickSound(); // Play click sound
+
         // Perform actions when the user clicks "Yes"
         // ...
         exitButton.style.display = 'none';
@@ -171,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Event listener for the No button
     noButton.addEventListener('click', function () {
-        playClickSound(); 
-        
+        playClickSound(); // Play click sound
+
         document.getElementById('popup').classList.remove('visible');
         if (gameState.gamestart === 0) {
             showStartScreen(true)
@@ -184,12 +168,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
-
     function showGameOverScreen(show) {
         const gameOverScreen = document.getElementById('gameOverScreen');
         gameOverScreen.style.display = show ? 'block' : 'none';
     }
-
 
     // Hearts
     const minecraftHeartsContainer = document.getElementById('minecraftHeartsContainer');
@@ -230,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function playBGM() {
         // Check if the audio element is loaded
         if (bgm) {
-            // Set the audio to 15 percent or lower
+            // Set the audio to 50 percent or lower
             bgm.volume = 0.15;
             // Play the sound
             //bgm.play();
