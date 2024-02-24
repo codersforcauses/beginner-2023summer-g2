@@ -49,11 +49,9 @@ class Player {
         const image = new Image()
         image.src = './img/spaceship.png'
         image.onload = () => {
-            //const scale = 0.15
             this.image = image
-            //67.5 x 37.75 2:1 ratio
-            this.width = 60//image.width * scale
-            this.height = 30//image.height * scale
+            this.width = 60
+            this.height = 30
 
             this.position = {
                 x: canvas.width / 2 - this.width / 2,
@@ -89,7 +87,7 @@ class Player {
     }     
     shoot() {
         const numProjectiles = 5;
-        const angleStep = Math.PI / 20; // Adjust the angle step as needed
+        const angleStep = Math.PI / 22; // Angle of Flak Cannon
         for (let i = 0; i < numProjectiles; i++) {
             const angleOffset = (i - (numProjectiles - 1) / 2) * angleStep;
             const projectileVelocity = {
@@ -106,8 +104,6 @@ class Player {
         }
     }
 }
-
-
 
 class Projectile {
     constructor({position, velocity}){
@@ -266,6 +262,12 @@ class Invader {
         }   
     }     
     shoot(invaderProjectiles) {
+        //EnemyShoot sound
+        if (!myGameGlobals.SFXMute) {
+            EnemyShootSFX.volume = 0.2
+            EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+            EnemyShootSFX.play();
+        }
         invaderProjectiles.push(
             new InvaderProjectile({
             position: {
@@ -390,6 +392,12 @@ class Elite {
         this.cd--;
     }     
     shoot(invaderProjectiles) {
+        //EnemyShoot sound
+        if (!myGameGlobals.SFXMute) {
+            EnemyShootSFX.volume = 0.2
+            EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+            EnemyShootSFX.play();
+        }
         invaderProjectiles.push(
             new EliteProjectile({
             position: {
@@ -978,7 +986,7 @@ class Primordial {
             }
         }
         //Boss health and cooldown
-        this.health = 5000
+        this.health = 4500
         this.cd1 = 0
         this.cd2 = 0
         this.cd3 = 0
@@ -1161,7 +1169,6 @@ function animate(){
     if (!animationPaused) {
         requestAnimationFrame(animate);
     } 
-    //requestAnimationFrame(animate)
     c.fillStyle = 'black'
     c.fillRect(0, 0, canvas.width, canvas.height)
     player.update()
@@ -1193,6 +1200,12 @@ function animate(){
             invaderProjectile.position.x + invaderProjectile.width >= player.position.x + 5 &&
             invaderProjectile.position.x <= player.position.x + player.width - 5 &&
             !player.immune) {
+                //PlayerHit sound
+                if (!myGameGlobals.SFXMute) {
+                    PlayerHitSFX.volume = 0.3
+                    PlayerHitSFX.currentTime = 0; // Reset the audio to the beginning
+                    PlayerHitSFX.play();
+                }
                 invaderProjectiles.splice(index, 1)
                 player.immune = true
                 player.health--;
@@ -1211,6 +1224,12 @@ function animate(){
                         invaderProjectiles.splice(index, 1)
                         game.active = false
                         player.opacity = 0
+                        //GameOver sound
+                        if (!myGameGlobals.SFXMute) {
+                            GameOver.volume = 0.5
+                            GameOver.currentTime = 0; // Reset the audio to the beginning
+                            GameOver.play();
+                        }
                     }, 0)
                 }
                 createParticles({
@@ -1281,6 +1300,12 @@ function animate(){
                                 grids.splice(gridIndex, 1)
                             }
                             if (invader.health <= 0) {
+                                //EnemyDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    EnemyDieSFX.volume = 0.5
+                                    EnemyDieSFX.currentTime = 0; // Reset the audio to the beginning
+                                    EnemyDieSFX.play();
+                                }
                                 grid.invaders.splice(i, 1)
                                 invader.isSpliced = true
                                 score += 100
@@ -1306,6 +1331,12 @@ function animate(){
                 setTimeout(() => {
                     game.active = false
                     player.opacity = 0
+                    //GameOver sound
+                    if (!myGameGlobals.SFXMute) {
+                        GameOver.volume = 0.5
+                        GameOver.currentTime = 0; // Reset the audio to the beginning
+                        GameOver.play();
+                    }
                 }, 0)
                 createParticles({
                     object: player,
@@ -1333,6 +1364,12 @@ function animate(){
         //player shooting logic
         if (keys.space.pressed) {
             if (canShoot) {
+                //PlayerShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    ShootSFX.volume = 0.3
+                    ShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    ShootSFX.play();
+                }
                 projectiles.push(new Projectile({
                     position: {
                         x: player.position.x + player.width / 2,
@@ -1349,8 +1386,8 @@ function animate(){
         }
     } 
     //spawn enemies
-    if (startCount >= 1 && game.active){
-        if (frames % randomInterval === 0) {
+    if (startCount >= 1){
+        if (frames % randomInterval === 0 && game.active) {
             if (bosstimer >= 1 && lunaCount <= 0) {
 
                 grids.push(new Grid())
@@ -1439,8 +1476,28 @@ function animate(){
                     projectile.position.y + projectile.radius >= elite.position.y) {
                     setTimeout(() => {
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
-                        // remove invader and projectile upon collision
+                        // remove Elite and projectile upon collision
                         if (projectileFound){
+                            //EliteHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
                             projectiles.splice(j,1)
                             elite.health -= player.damage;
                             createParticles({
@@ -1449,6 +1506,12 @@ function animate(){
                                 fades: true
                             })
                             if (elite.health <= 0) {
+                                //EnemyDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    EnemyDieSFX.volume = 0.9
+                                    EnemyDieSFX.currentTime = 0; // Reset the audio to the beginning
+                                    EnemyDieSFX.play();
+                                }
                                 eliteSpawned = false
                                 score += 1000
                                 scoreEl.innerHTML = score
@@ -1463,18 +1526,42 @@ function animate(){
             luna.update();
             if (game.active){
                 if (luna.cd >= 250){
+                    //EnemyShoot sound
+                    if (!myGameGlobals.SFXMute) {
+                        EnemyShootSFX.volume = 0.2
+                        EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                        EnemyShootSFX.play();
+                    }
                     luna.shoot(invaderProjectiles, "LucentBeam");
                     luna.cd = 0;
                 }
                 if (luna.ecd >= 80){
+                    //EnemyShoot sound
+                    if (!myGameGlobals.SFXMute) {
+                        EnemyShootSFX.volume = 0.1
+                        EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                        EnemyShootSFX.play();
+                    }
                     luna.shoot(invaderProjectiles, "Eclipse");
                     luna.ecd = 0;
                 }
                 if (luna.mrcd >= 40 && luna.velocity.x <= 1 && luna.health < 250){
+                    //EnemyShoot sound
+                    if (!myGameGlobals.SFXMute) {
+                        EnemyShootSFX.volume = 0.15
+                        EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                        EnemyShootSFX.play();
+                    }
                     luna.shoot(invaderProjectiles, "MoonGlaivesRight")
                     luna.mrcd = 0;
                 }
                 if (luna.mlcd >= 40 && luna.velocity.x >= 1 && luna.health < 250){
+                    //EnemyShoot sound
+                    if (!myGameGlobals.SFXMute) {
+                        EnemyShootSFX.volume = 0.15
+                        EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                        EnemyShootSFX.play();
+                    }
                     luna.shoot(invaderProjectiles, "MoonGlaivesLeft")
                     luna.mlcd = 0;
                 }
@@ -1493,6 +1580,27 @@ function animate(){
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         // reduce health and remove projectile upon collision
                         if (projectileFound){
+                            //BossHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
+                            bossHitSFX = Math.floor(Math.random() * 4) + 1;
                             projectiles.splice(j,1)
                             luna.health -= player.damage;
                             console.log(luna.health)
@@ -1510,7 +1618,12 @@ function animate(){
                                 player.health = 10
                                 gameState.hearts = player.health;
                                 updateHearts(player.health)
-
+                                //BossDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    BossDie.currentTime = 0; // Reset the audio to the beginning
+                                    BossDie.play();
+                                }
+                                qAmmo = 90;
                             }
                         }
                     }, 0)
@@ -1521,14 +1634,32 @@ function animate(){
             harbinger.update();
             if (game.active){
             if (harbinger.aocd >= 170){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 harbinger.shoot(invaderProjectiles, "ArcaneOrb");
                 harbinger.aocd = 0;
             }
             if (harbinger.efcd >= 17){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 harbinger.shoot(invaderProjectiles, "EssenceFlux");
                 harbinger.efcd = 0;
             }
             if (harbinger.secd >= 1700){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.4
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 harbinger.shoot(invaderProjectiles, "SanitysEclipse")
                 harbinger.secd = 0;
             }
@@ -1547,6 +1678,26 @@ function animate(){
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         // reduce health and remove projectile upon collision
                         if (projectileFound){
+                            //BossHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
                             projectiles.splice(j,1)
                             harbinger.health -= player.damage;
                             console.log(harbinger.health)
@@ -1564,7 +1715,12 @@ function animate(){
                                 player.health = 10
                                 gameState.hearts = player.health;
                                 updateHearts(player.health)
-
+                                //BossDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    BossDie.currentTime = 0; // Reset the audio to the beginning
+                                    BossDie.play();
+                                }
+                                wCooldown = 500;
                             }
                         }
                     }, 0)
@@ -1575,14 +1731,32 @@ function animate(){
             enigma.update();
             if (game.active){
             if (enigma.mpcd === 12){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 enigma.shoot(invaderProjectiles, "MidnightPulse");
                 enigma.mpcd = 0;
             }
             if (enigma.mrcd === 300){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 enigma.shoot(invaderProjectiles, "MaleficeRight");
                 enigma.mrcd = 0;
             }
             if (enigma.mlcd === 300){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 enigma.shoot(invaderProjectiles, "MaleficeLeft")
                 enigma.mlcd = 0;
             }
@@ -1601,6 +1775,26 @@ function animate(){
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         // reduce health and remove projectile upon collision
                         if (projectileFound){
+                            //BossHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
                             projectiles.splice(j,1)
                             enigma.health -= player.damage;
                             console.log(enigma.health)
@@ -1618,7 +1812,12 @@ function animate(){
                                 player.health = 10
                                 gameState.hearts = player.health;
                                 updateHearts(player.health)
-                                
+                                //BossDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    BossDie.currentTime = 0; // Reset the audio to the beginning
+                                    BossDie.play();
+                                }
+                                eCooldown = 500;
                             }
                         }
                     }, 0)
@@ -1628,15 +1827,33 @@ function animate(){
         if (ancientSpawned) {
             ancient.update();
             if (game.active){
-            if (ancient.cd1 >= 12){
+            if (ancient.cd1 >= 13){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 ancient.shoot(invaderProjectiles, "MidnightPulse");
                 ancient.cd1 = 0;
             }
-            if (ancient.cd2 >= 22){
+            if (ancient.cd2 >= 24){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 ancient.shoot(invaderProjectiles, "EssenceFlux");
                 ancient.cd2 = 0;
             }
             if (ancient.cd3 >= 300){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 ancient.shoot(invaderProjectiles, "ArcaneOrb")
                 ancient.cd3 = 0;
             }
@@ -1655,6 +1872,26 @@ function animate(){
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         // reduce health and remove projectile upon collision
                         if (projectileFound){
+                            //BossHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
                             projectiles.splice(j,1)
                             ancient.health -= player.damage;
                             console.log(ancient.health)
@@ -1672,7 +1909,12 @@ function animate(){
                                 player.health = 10
                                 gameState.hearts = player.health;
                                 updateHearts(player.health)
-
+                                //BossDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    BossDie.currentTime = 0; // Reset the audio to the beginning
+                                    BossDie.play();
+                                }
+                                rCooldown = 500;
                             }
                         }
                     }, 0)
@@ -1683,32 +1925,78 @@ function animate(){
             primordial.update();
             if (game.active){
             if (primordial.cd1 >= 12){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "MidnightPulse");
                 primordial.cd1 = 0;
             }
             if (primordial.cd2 >= 22){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.05
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "EssenceFlux");
                 primordial.cd2 = 0;
             }
             if (primordial.cd3 >= 322){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "MaleficeRight")
                 primordial.cd3 = 0;
             }
             if (primordial.cd4 >= 322) {
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "MaleficeLeft")
                 primordial.cd4 = 0;
             }
             if (primordial.cd5 >= 252 && primordial.health <= 2000){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.2
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "LucentBeam")
                 primordial.cd5 = 0;
             }
             if (primordial.cd6 >= 82 && primordial.health <= 2000){
+                //EnemyShoot sound
+                if (!myGameGlobals.SFXMute) {
+                    EnemyShootSFX.volume = 0.1
+                    EnemyShootSFX.currentTime = 0; // Reset the audio to the beginning
+                    EnemyShootSFX.play();
+                }
                 primordial.shoot(invaderProjectiles, "Eclipse")
                 primordial.cd6 = 0;
             }
             if (primordial.cd7 <= 0) {
                 grids.push(new Grid())
                 primordial.cd7 = 3000;
+            }
+            if (primordial.health === 2000) {
+                //Boss5 SFX sound
+                if (!myGameGlobals.SFXMute) {
+                    if (Boss5SFX) {
+                        Boss5SFX.volume = 0.6
+                        Boss5SFX.currentTime = 0; // Reset the audio to the beginning
+                        Boss5SFX.play();
+                    }
+                }
             }
         }
             //player hits primordial
@@ -1720,6 +2008,26 @@ function animate(){
                     setTimeout(() => {
                         const projectileFound = projectiles.find((projectile2) => projectile2 === projectile)
                         if (projectileFound){
+                            //BossHit sound
+                            if (!myGameGlobals.SFXMute) {
+                                if (bossHitSFX === 1) {
+                                    BossHit1.volume = 0.3
+                                    //BossHit1.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit1.play();
+                                } else if (bossHitSFX === 2) {
+                                    BossHit2.volume = 0.3
+                                    //BossHit2.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit2.play();
+                                } else if (bossHitSFX ===3 ) { 
+                                    BossHit3.volume = 0.3
+                                    //BossHit3.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit3.play();
+                                } else {
+                                    BossHit4.volume = 0.3
+                                    //BossHit4.currentTime = 0; // Reset the audio to the beginning
+                                    BossHit4.play();
+                                }
+                            }
                             projectiles.splice(j,1)
                             primordial.health -= player.damage;
                             console.log(primordial.health)
@@ -1734,13 +2042,17 @@ function animate(){
                                 scoreEl.innerHTML = score
                                 bosstimer = Math.floor(Math.random () * 2000 + 14000)
                                 primordial.cd7 = 35000
-                                primordial.health = 6000
+                                primordial.health = 5000
                                 primordialCount++
                                 primordial.image.src = './img/boss5.1.png'
                                 player.health = 10
                                 gameState.hearts = player.health;
                                 updateHearts(player.health)
-
+                                //BossDie sound
+                                if (!myGameGlobals.SFXMute) {
+                                    BossDie.currentTime = 0; // Reset the audio to the beginning
+                                    BossDie.play();
+                                }
                             }
                         }
                     }, 0)
@@ -1754,7 +2066,26 @@ function animate(){
     if (bosstimer <= 0 && !lunaSpawned && !harbingerSpawned && !enigmaSpawned && !ancientSpawned && !primordialSpawned && game.active) {
         showBossWarning()
         bossWarningFrames++
+        //BossAlert Sound
+        if (bossNumber >= 4 && !myGameGlobals.SFXMute) {
+            if (BossAlert2) {
+                BossAlert2.volume = 0.5
+                BossAlert2.play();
+            }
+        } else if (!myGameGlobals.SFXMute){
+            if (BossAlert1) {
+                BossAlert1.volume = 0.5
+                BossAlert1.play();
+            }
+        }
         if (bossWarningFrames >= bossWarningDuration) {
+            //BossSpawn sound
+            if (!myGameGlobals.SFXMute){
+                if (BossSpawn) {
+                    BossSpawn.volume = 0.5
+                    BossSpawn.play();
+                }
+            }
             hideBossWarning();
             bossNumber++
             bossWarningFrames = 0
@@ -1766,6 +2097,12 @@ function animate(){
     if (keys.q.pressed) {        
         if (canShoot && qAmmo >= 1 && lunaCount >= 1) 
         {
+            //Flak Cannon Sound
+            if (!myGameGlobals.SFXMute) {
+                Flak.volume = 0.4
+                Flak.currentTime = 0; // Reset the audio to the beginning
+                Flak.play();
+            }
             player.shoot()
             canShoot = false;
             setTimeout(resetCooldown, fireCooldown);
@@ -1776,9 +2113,17 @@ function animate(){
     if (qReload <= 0 && qAmmo <= 99) {
         qAmmo++
         if (primordialCount >= 1) {
-            qReload = 35
+            qReload = 30
         } else {
             qReload = 55
+        }
+        if (qAmmo === 99) {
+            //Reload Sound
+            if (!myGameGlobals.SFXMute) {
+                Reload.volume = 0.6
+                Reload.currentTime = 0; // Reset the audio to the beginning
+                Reload.play();
+            }
         }
     }
     if (lunaCount >= 1) {
@@ -1790,23 +2135,34 @@ function animate(){
     // Overcharge: Improves fire rate significantly for a few seconds
     if (keys.w.pressed && wCooldown <= 0 && harbingerCount >= 1) 
     {
+        //Overcharge Sound
+        if (!myGameGlobals.SFXMute) {
+            Overcharge.volume = 0.4
+            Overcharge.currentTime = 0; // Reset the audio to the beginning
+            Overcharge.play();
+        }
         fireCooldown = 15
         if (primordialCount >= 1) {
             wCooldown = 3000
             wDuration = 800
         } else {
             wCooldown = 4000
-            wDuration = 660
+            wDuration = 666
         }
-        
     }
     wDuration--
     wCooldown--
     if (wDuration <= 0) {
-        fireCooldown = 100
+        fireCooldown = 90
     }
     if (wCooldown >=0 && harbingerCount >= 1) {
         document.getElementById('icon2Count').textContent = Math.floor(wCooldown/100);
+        //OverchargeCD Sound
+        if (!myGameGlobals.SFXMute && wCooldown === 100) {
+            OverchargeCD.volume = 0.5
+            OverchargeCD.currentTime = 0; // Reset the audio to the beginning
+            OverchargeCD.play();
+        }
     } else if (harbingerCount >= 1) {
         document.getElementById('icon2Count').textContent = "Ready";
     } else {
@@ -1816,11 +2172,17 @@ function animate(){
     // Force Field: Creates a protective barrier in the middle of the screen
     if (keys.e.pressed && eCooldown <= 0 && enigmaCount >= 1) 
     {
+        //Shield Sound
+        if (!myGameGlobals.SFXMute) {
+            Shield.volume = 0.5
+            Shield.currentTime = 0; // Reset the audio to the beginning
+            Shield.play();
+        }
         eDuration = 1500
         shield.activate()
 
         if (primordialCount >= 1) {
-            eCooldown = 3200
+            eCooldown = 3000
         } else {
             eCooldown = 4000
         }
@@ -1832,6 +2194,12 @@ function animate(){
     }
     if (eCooldown >=0 && enigmaCount >= 1) {
         document.getElementById('icon3Count').textContent = Math.floor(eCooldown/100);
+        //ShieldCD Sound
+        if (!myGameGlobals.SFXMute && eCooldown === 100) {
+            ShieldCD.volume = 0.5
+            ShieldCD.currentTime = 0; // Reset the audio to the beginning
+            ShieldCD.play();
+        }
     } else if (enigmaCount >= 1) {
         document.getElementById('icon3Count').textContent = "Ready";
     } else {
@@ -1841,6 +2209,12 @@ function animate(){
     // Nano Machines: Heals the player by 3 health
     if (keys.r.pressed && rCooldown <=0 && ancientCount >= 1) 
     {
+        //Heal Sound
+        if (!myGameGlobals.SFXMute) {
+            Heal.volume = 0.5
+            Heal.currentTime = 0; // Reset the audio to the beginning
+            Heal.play();
+        }
         if (player.health >= 7) {
             player.health = 10
             gameState.hearts = player.health;
@@ -1859,6 +2233,12 @@ function animate(){
     rCooldown--
     if (rCooldown >=0 && ancientCount >= 1) {
         document.getElementById('icon4Count').textContent = Math.floor(rCooldown/100);
+        //HealCD Sound
+        if (!myGameGlobals.SFXMute && rCooldown === 100) {
+            HealCD.volume = 0.6
+            HealCD.currentTime = 0; // Reset the audio to the beginning
+            HealCD.play();
+        }
     } else if (ancientCount >= 1) {
         document.getElementById('icon4Count').textContent = "Ready";
     } else {
@@ -1897,72 +2277,18 @@ let elitetimer = Math.floor(Math.random() * 2000 + 4000)
 let bossWarningFrames = 0;
 const bossWarningDuration = 600;
 let bossNumber = 0
-
-//= JSON.parse(localStorage.getItem("leaderboard"))
-//ledaerboard dict
-var leaderboard = [
-    {name: "start", score : 1},
-];
-
-
-//display the leaderboard 
-function generateLeaderboard() {
-    var leaderboardBody = document.getElementById("leaderboardBody");
-    leaderboardBody.innerHTML = "";
-    // Display only top 10 entries
-    var topEntries = leaderboard.slice(0, 10);
-    topEntries.forEach(function(entry, index) {
-        var leaderboardItem = document.createElement("div");
-        leaderboardItem.classList.add("leaderboard-item");
-        leaderboardItem.innerHTML = `
-            <span class="position">${index + 1}.</span>
-            <span class="name">${entry.name}</span>
-            <span class="score">${entry.score}</span>
-        `;
-        leaderboardBody.appendChild(leaderboardItem);
-        
-    });
-
-}
-function saveLeaderboardData() {
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-}
-
-//adding score to leaderboard
-
-function updateLeaderboard(score) {
-    var testscore = score;
-    var top10Scores = leaderboard.slice(0, 10).map(entry => entry.score);
-    if (testscore > Math.min(...top10Scores)) {
-        var name = (Math.floor(Math.random() * 1000) + 1).toString();
-        leaderboard.push({ name: name, score: score });
-        leaderboard.sort(function(a, b) {
-            return b.score - a.score;
-        });
-        saveLeaderboardData(); // Save updated data to localStorage
-    }
-}
-
-
+let bossHitSFX = Math.floor(Math.random() * 4) + 1;
 
 function showGameOverScreen(show) {
     // Get the score element
     const scoreOverElement = document.getElementById('scoreOver');
 
-
     // Set the content of the score element to the current score
     scoreOverElement.textContent = score;
-    updateLeaderboard(myGameGlobals.Score);
 
     const gameOverScreen = document.getElementById('gameOverScreen');
     gameOverScreen.style.display = show ? 'block' : 'none';
-
-    
 }
-generateLeaderboard();
-
-
-
 
 function showPauseScreen(show) {
     const startScreen = document.getElementById('pauseScreen');
@@ -1997,16 +2323,26 @@ window.addEventListener('keydown', ({ key }) => {
         Ecount++;
         pauseAnimation();
         showPauseScreen(true);
+        //Pause sound
+        if (!myGameGlobals.SFXMute) {
+            Pause.currentTime = 0; // Reset the audio to the beginning
+            Pause.play();
+        }
 
     } else if (key === 'Enter' && myGameGlobals.canAcceptInput){
         Ecount++;
         resumeAnimation();
         showPauseScreen(false);
+        //Pause sound
+        if (!myGameGlobals.SFXMute) {
+            Pause.currentTime = 0; // Reset the audio to the beginning
+            Pause.play();
+        }
     }
 });
 
 // Fire rate logic, set the desired fire rate in milliseconds 
-let fireCooldown = 100; 
+let fireCooldown = 90; 
 let canShoot = true;
 function resetCooldown() {
     canShoot = true;
@@ -2014,7 +2350,14 @@ function resetCooldown() {
 
 let startCount = 0
 function resetGame() {
+    //Start sound
+    if (!myGameGlobals.SFXMute) {
+        Start.volume = 0.5
+        Start.currentTime = 0; // Reset the audio to the beginning
+        Start.play();
+    }
     myGameGlobals.Score = 0
+    
     showGameOverScreen(false);
     showStartScreen(false);
     startCount = 1
@@ -2038,7 +2381,12 @@ function resetGame() {
     enigmaCount = 0;
     ancientCount = 0;
     primordialCount = 0;
-    bosstimer = Math.floor(Math.random () * 3000 + 12000)
+    luna.health = 600;
+    harbinger.health = 1500;
+    enigma.health = 2500;
+    ancient.health = 3000;
+    primordial.health = 4500;
+    bosstimer = 1000//Math.floor(Math.random () * 3000 + 12000)
     elitetimer = Math.floor(Math.random() * 2000 + 8000)
     bossWarningFrames = 0
     bossNumber = 0
@@ -2127,7 +2475,6 @@ function showStartScreen(show) {
     const startScreen = document.getElementById('startScreen');
     startScreen.style.display = show ? 'block' : 'none';
 }
-
 // Add this function to show the boss warning
 function showBossWarning() {
     const bossWarning = document.getElementById('bossWarning');
@@ -2173,4 +2520,3 @@ function updateHearts(playerHealth) {
 updateHearts(gameState.hearts);
 
 animate();
-
